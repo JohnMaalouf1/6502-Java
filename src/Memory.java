@@ -1,4 +1,4 @@
-public class Memory extends Hardware{
+public class Memory extends Hardware implements ClockListener{
     private int mem[] = new int[0x14];
     public Memory(String name, int idNum, boolean debug) {
         super(name, idNum, debug);
@@ -13,5 +13,10 @@ public class Memory extends Hardware{
         } else {
             log("Address : 0x" + Integer.toString(index) + "  Contains Value: ERR [hexValue conversion]: number undefined");
         }
+    }
+
+    @Override
+    public void pulse() {
+        log("received clock pulse - MEMORY");
     }
 }
