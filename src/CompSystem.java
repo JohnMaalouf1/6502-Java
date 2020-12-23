@@ -7,7 +7,7 @@ public class CompSystem extends Hardware {
     private static Memory MEM = null;
     public boolean running = true;
     public static Clock CLK = null;
-    static int CLOCK_INTERVAL = 1;
+    static int CLOCK_INTERVAL = 500;
 
     public CompSystem(String name, int idNum, boolean debug) {
         super(name, idNum, debug);
@@ -16,32 +16,39 @@ public class CompSystem extends Hardware {
     }
 
 
-    public static void main(String[] args){
-            CPU = new Cpu("CPU", 0 , true);
-            CPU.log("Created");
+    public static void main(String[] args) {
+        CPU = new Cpu("CPU", 0, true);
+        CPU.log("Created");
 
 
-            MEM = new Memory("RAM", 0 ,true);
-            MEM.log("Created");
-            System.out.println("\n");
+        MEM = new Memory("RAM", 0, true);
+        MEM.log("Created");
+        System.out.println("\n");
 
-            CLK = new Clock("Clock", 0, true);
-            CLK.log("Created");
+        CLK = new Clock("Clock", 0, true);
+        CLK.log("Created");
 
-            MEM.displayMemory(0x12);
-            MEM.displayMemory(0x17);
+        MEM.setMAR(1);
+        MEM.read();
+        MEM.write();
+        MEM.reset();
+        MEM.read();
+        MEM.write();
+        MEM.displayMemory(0x14);
+        MEM.displayMemory(0x17);
 
-            CLK.addListener(MEM);
-            CLK.addListener(CPU);
+        CLK.addListener(MEM);
+        CLK.addListener(CPU);
 
 
-        Timer t = new Timer();
-        t.schedule(new TimerTask() {
-            public void run() {
-                CLK.clockCycle();
-            }
-        }, 0, CLOCK_INTERVAL);
+//        Timer t = new Timer();
+//        t.schedule(new TimerTask() {
+//            public void run() {
+//                CLK.clockCycle();
+//            }
+//        }, 0, CLOCK_INTERVAL);
+//
+//        }
 
-        }
-
+    }
 }
